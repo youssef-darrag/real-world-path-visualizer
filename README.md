@@ -7,7 +7,6 @@
 
 An interactive desktop application built with Python and Tkinter that visualizes various pathfinding algorithms on real-world maps using OpenStreetMap data. Compare how different search algorithms (BFS, DFS, DLS, IDS, UCS, A*) explore and find paths between geographic locations.
 
-![Demo Screenshot](demo/screenshot.png) *Replace with your actual screenshot*
 
 ## ✨ Features
 
