@@ -5,13 +5,6 @@ from core.utils import reconstruct_path
 
 
 def bfs(graph: MultiDiGraph, start: int, goal: int, callback=None, delay: float = 0.0):
-    """
-    BFS algorithm with optional step-by-step visualization.
-
-    Args:
-        callback: Function called with (current_node, visited_set) after each step
-        delay: Kept for compatibility (delay is handled in callback)
-    """
     queue = deque([start])
     parent = {start: None}
     visited_set = set()

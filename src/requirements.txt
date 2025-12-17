@@ -1,3 +1,0 @@
-tkintermapview
-osmnx
-networkx

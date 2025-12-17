@@ -1,18 +1,11 @@
-"""
-UI Builder - Constructs UI components
-"""
-
 import tkinter as tk
 from tkinter import ttk
 import tkintermapview
 
-
 class UIBuilder:
-    """Builds and organizes UI components."""
 
     @staticmethod
     def create_map_widget(parent):
-        """Create and configure map widget."""
         map_frame = tk.Frame(parent)
         map_frame.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
 
@@ -27,16 +20,6 @@ class UIBuilder:
 
     @staticmethod
     def create_controls_panel(parent, callbacks):
-        """
-        Create controls panel with all buttons and inputs.
-
-        Args:
-            parent: Parent widget
-            callbacks: dict with callback functions
-
-        Returns:
-            tuple: (controls_frame, widgets_dict)
-        """
         controls = ttk.LabelFrame(parent, text="🎮 Controls", padding=15)
         controls.grid(row=1, column=0, sticky="ew", padx=10, pady=(0, 10))
         controls.columnconfigure(1, weight=1)
@@ -90,7 +73,6 @@ class UIBuilder:
         mode_label.pack(side="left", padx=(10, 0))
         widgets["mode_label"] = mode_label
 
-        # Random buttons
         random_btn = ttk.Button(
             controls, text="🎲 Random",
             command=callbacks.get("on_randomize"),
@@ -210,7 +192,6 @@ class UIBuilder:
 
     @staticmethod
     def update_status(stats_text, message):
-        """Update status/stats text widget."""
         stats_text.config(state="normal")
         stats_text.delete("1.0", tk.END)
         stats_text.insert(tk.END, message)
@@ -218,7 +199,6 @@ class UIBuilder:
 
     @staticmethod
     def create_diagnostic_window(parent, report_text):
-        """Create diagnostic popup window."""
         diag_window = tk.Toplevel(parent)
         diag_window.title("🔍 Graph Diagnostics")
         diag_window.geometry("650x550")

@@ -1,7 +1,3 @@
-"""
-Map Controller - Handles map interactions and node selection
-"""
-
 import math
 from tkinter import messagebox
 from core.map import Map
@@ -9,8 +5,6 @@ from core.map_diagnostics import check_connectivity, find_valid_endpoints
 
 
 class MapController:
-    """Manages map state and interactions."""
-
     def __init__(self, map_widget):
         self.map_widget = map_widget
         self.map = Map()
@@ -27,7 +21,6 @@ class MapController:
         self.current_paths = []
 
     def load_map(self, location, force_download=False):
-        """Load map data for given location."""
         success, msg = self.map.load_map(location, force_download)
 
         if success:
@@ -40,7 +33,6 @@ class MapController:
         return success, msg
 
     def find_nearest_node(self, lat, lon):
-        """Find the nearest graph node to given coordinates."""
         min_dist = float('inf')
         nearest = None
 
@@ -54,10 +46,6 @@ class MapController:
         return nearest
 
     def handle_map_click(self, coords, debug_mode=False):
-        """
-        Handle map click to select start/goal.
-        Returns: (success, status_message)
-        """
         lat, lon = coords
 
         # Show debug marker if enabled
@@ -94,18 +82,15 @@ class MapController:
                     click_marker.delete()
                 return False, "Selection cancelled"
 
-        # Remove temporary marker
         if click_marker and not debug_mode:
             click_marker.delete()
 
-        # Set start or goal
         if self.click_mode == "start":
             return self._set_start(nearest_node, node_lat, node_lon, snap_distance)
         else:
             return self._set_goal(nearest_node, node_lat, node_lon, snap_distance)
 
     def _set_start(self, node_id, lat, lon, snap_distance):
-        """Set start node."""
         self.start_node = node_id
         if self.start_marker:
             self.start_marker.delete()
@@ -127,7 +112,6 @@ class MapController:
         return True, status
 
     def _set_goal(self, node_id, lat, lon, snap_distance):
-        """Set goal node."""
         self.goal_node = node_id
         if self.goal_marker:
             self.goal_marker.delete()
@@ -140,7 +124,6 @@ class MapController:
             marker_color_outside="darkred",
         )
 
-        # Calculate distance
         s_lat, s_lon = self.map.get_node_coords(self.start_node)
         straight_dist = self._haversine_distance(s_lat, s_lon, lat, lon)
 
@@ -153,7 +136,6 @@ class MapController:
         return True, status
 
     def randomize_endpoints(self):
-        """Randomly select start and goal from graph nodes."""
         if not self.map.graph:
             return False, "No map loaded"
 
@@ -169,7 +151,6 @@ class MapController:
         return True, f"🎲 Points randomized | Distance: {dist:.2f} km"
 
     def smart_randomize_endpoints(self):
-        """Find connected endpoints using graph analysis."""
         if not self.map.graph:
             return False, "No map loaded"
 
@@ -190,14 +171,11 @@ class MapController:
         return True, f"✅ Connected points found (attempt {attempts}) | Distance: {dist:.2f} km"
 
     def _update_markers(self):
-        """Update start/goal markers on map."""
-        # Clear old markers
         if self.start_marker:
             self.start_marker.delete()
         if self.goal_marker:
             self.goal_marker.delete()
 
-        # Add new markers
         s_pos = self.map.get_node_coords(self.start_node)
         g_pos = self.map.get_node_coords(self.goal_node)
 
@@ -224,12 +202,10 @@ class MapController:
         return check_connectivity(self.map.graph, self.start_node, self.goal_node)
 
     def clear_paths(self):
-        """Clear all paths from map."""
         self.map_widget.delete_all_path()
         self.current_paths.clear()
 
     def clear_all(self):
-        """Clear everything from map."""
         self.map_widget.delete_all_marker()
         self.map_widget.delete_all_path()
         self.start_marker = None
@@ -241,8 +217,7 @@ class MapController:
         self.click_mode = "start"
 
     def _haversine_distance(self, lat1, lon1, lat2, lon2):
-        """Calculate distance between two points in km."""
-        R = 6371  # Earth radius in km
+        R = 6371
         dlat = math.radians(lat2 - lat1)
         dlon = math.radians(lon2 - lon1)
         a = (math.sin(dlat/2)**2 +
@@ -252,7 +227,6 @@ class MapController:
         return R * c
 
     def fit_bounds_to_path(self, coords):
-        """Adjust map view to fit the path."""
         if not coords:
             return
 

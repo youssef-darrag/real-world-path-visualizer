@@ -11,15 +11,9 @@ def astar(
     goal: int,
     nodes_data: dict[int, tuple[float, float]],
     callback=None,
-    delay: float = 0.0,  # Not used but kept for compatibility
+    delay: float = 0.0,
 ):
-    """
-    A* algorithm with optional step-by-step visualization.
 
-    Args:
-        callback: Function called with (current_node, visited_set) after each step
-        delay: Kept for compatibility (delay is handled in callback)
-    """
     pq = [(0, start)]
     g_score = {start: 0}
     parent = {start: None}
@@ -38,7 +32,6 @@ def astar(
 
         visited_set.add(current)
 
-        # Call callback for visualization (no sleep here)
         if callback:
             callback(current, visited_set.copy())
 

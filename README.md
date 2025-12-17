@@ -1,4 +1,4 @@
-# 🗺️ Pathfinding Algorithms Visualizer
+# 🗺️ GeoPath Visualizer
 
 A comprehensive pathfinding visualization tool with **two modes**:
 1. **Real-World Map Mode** - Visualize algorithms on actual road networks using OSMnx
@@ -101,7 +101,7 @@ grid-pathfinding-algorithms/
 └── README.md
 ```
 
-## 🎨 Screenshots
+## 🛩 INSIGHTS
 
 ### Real-World Map Mode
 - Interactive map with actual roads

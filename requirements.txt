@@ -1,0 +1,14 @@
+# Real Map Visualizer Dependencies
+osmnx>=1.6.0
+networkx>=3.0
+tkintermapview>=1.28
+
+# Grid Visualizer Dependencies
+pygame>=2.5.0
+
+# Common Dependencies
+matplotlib>=3.7.0
+numpy>=1.24.0
+
+# Optional: For data analysis
+pandas>=2.0.0

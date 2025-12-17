@@ -1,16 +1,8 @@
-"""
-Diagnostic utilities for debugging pathfinding failures
-"""
-
 import networkx as nx
 from networkx import MultiDiGraph
 
 
 def check_connectivity(graph: MultiDiGraph, start: int, goal: int):
-    """
-    Check if there's ANY path between start and goal.
-    Returns: (is_connected, info_dict)
-    """
     result = {
         "start_exists": start in graph.nodes,
         "goal_exists": goal in graph.nodes,
@@ -26,14 +18,11 @@ def check_connectivity(graph: MultiDiGraph, start: int, goal: int):
     if not result["start_exists"] or not result["goal_exists"]:
         return False, result
 
-    # Check if graph is strongly connected (all nodes can reach all others)
     result["is_strongly_connected"] = nx.is_strongly_connected(graph)
 
-    # Find weakly connected components
     weak_components = list(nx.weakly_connected_components(graph))
     result["components_count"] = len(weak_components)
 
-    # Find which component each node belongs to
     for i, component in enumerate(weak_components):
         if start in component:
             result["start_component"] = i
@@ -42,7 +31,6 @@ def check_connectivity(graph: MultiDiGraph, start: int, goal: int):
 
     result["same_component"] = (result["start_component"] == result["goal_component"])
 
-    # Check if path exists (considering direction)
     try:
         result["path_exists"] = nx.has_path(graph, start, goal)
         result["is_connected"] = result["path_exists"]
@@ -54,7 +42,6 @@ def check_connectivity(graph: MultiDiGraph, start: int, goal: int):
 
 
 def get_graph_stats(graph: MultiDiGraph):
-    """Get overall graph statistics."""
     stats = {
         "nodes": graph.number_of_nodes(),
         "edges": graph.number_of_edges(),
@@ -64,7 +51,6 @@ def get_graph_stats(graph: MultiDiGraph):
         "strong_components": nx.number_strongly_connected_components(graph),
     }
 
-    # Get largest component
     if stats["weak_components"] > 1:
         largest = max(nx.weakly_connected_components(graph), key=len)
         stats["largest_component_size"] = len(largest)
@@ -77,29 +63,21 @@ def get_graph_stats(graph: MultiDiGraph):
 
 
 def find_valid_endpoints(graph: MultiDiGraph, max_attempts=100):
-    """
-    Find two random nodes that are definitely connected.
-    Returns: (start, goal, attempts_made)
-    """
     import random
 
-    # Get largest strongly connected component
     strong_components = list(nx.strongly_connected_components(graph))
     if not strong_components:
         return None, None, 0
 
-    # Use largest component
     largest_component = max(strong_components, key=len)
     component_nodes = list(largest_component)
 
     if len(component_nodes) < 2:
         return None, None, 0
 
-    # Pick two random nodes from the same component
     for attempt in range(max_attempts):
         start, goal = random.sample(component_nodes, 2)
 
-        # Verify path exists
         if nx.has_path(graph, start, goal):
             return start, goal, attempt + 1
 
@@ -107,7 +85,6 @@ def find_valid_endpoints(graph: MultiDiGraph, max_attempts=100):
 
 
 def suggest_fixes(diagnostic_result):
-    """Suggest fixes based on diagnostic results."""
     suggestions = []
 
     if not diagnostic_result["start_exists"]:
@@ -141,7 +118,6 @@ def suggest_fixes(diagnostic_result):
 
 
 def format_diagnostic_report(stats, diagnostic=None):
-    """Format diagnostic information for display."""
     report = []
     report.append("📊 GRAPH STATISTICS")
     report.append("=" * 50)
@@ -169,7 +145,6 @@ def format_diagnostic_report(stats, diagnostic=None):
         if diagnostic['goal_component'] is not None:
             report.append(f"Goal Component ID: {diagnostic['goal_component']}")
 
-        # Add suggestions
         suggestions = suggest_fixes(diagnostic)
         if suggestions:
             report.append("\n💡 SUGGESTIONS")
