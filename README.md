@@ -189,12 +189,12 @@ grid-pathfinding-algorithms/
 
 ## 👥 Authors
 
-Youssef  - [GitHub](https://github.com/youssef-darrag)
-Salma    - [GitHub](https://github.com/salmasamh)
-Hoda     - [GitHub](https://github.com/hudah-hamza)
-Yomna    - [GitHub](https://github.com/yomnazedan14-ux)
-Mahmoud  - [GitHub](https://github.com/MahmoudOmiesh)
-Mohammed - [GitHub](https://github.com/moohammedali)
+Youssef  - [GitHub](https://github.com/youssef-darrag) <br />
+Salma    - [GitHub](https://github.com/salmasamh)      <br />
+Hoda     - [GitHub](https://github.com/hudah-hamza)    <br />
+Yomna    - [GitHub](https://github.com/yomnazedan14-ux)<br />
+Mahmoud  - [GitHub](https://github.com/MahmoudOmiesh)  <br />
+Mohammed - [GitHub](https://github.com/moohammedali)   <br />
 
 ## 🙏 Acknowledgments
 
